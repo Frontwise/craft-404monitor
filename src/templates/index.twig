@@ -1,0 +1,63 @@
+{% extends "_layouts/cp" %}
+{% set title = '404 monitor' %}
+
+{% block actionButton %}
+    <div class="buttons secondary-buttons">
+        <div class="btngroup submit">
+            <input type="submit" name="delete" class="btn submit" onclick="return confirm('{{ 'Are you sure you want to delete all web 404 requests?'|t('monitor404') }}')" value="{{ 'Delete all requests'|t('monitor404') }}" />
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <table class="data fullwidth">
+        <thead>
+            <tr>
+                <th>{{ 'URL'|t('monitor404') }}</th>
+                <th class="ordered desc" data-attribute="">{{ 'Hits'|t('monitor404') }}</th>
+                <th class="orderable" scope="col" data-attribute="dateCreated">{{ 'Last hit'|t('monitor404') }}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in web404s %}
+                <tr>
+                    <td>
+                        <a href="{{ url('monitor404/' ~ row.siteId ~ '/' ~ row.id) }}">
+                            {{ row.url }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url('monitor404/' ~ row.siteId ~ '/' ~ row.id) }}">
+                            {{ row.hits }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ row.dateCreated|date('Y-m-d H:i') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block sidebar %}
+    <nav>
+        <ul>
+            {% for item in sources %}
+
+                {% if item.heading is defined %}
+                    <li class="heading"><span>{{ item.heading }}</span></li>
+                {% else %}
+                    {% set id = item.key %}
+                    {% if id == '*' %}
+                        {% set id = null %}
+                    {% endif %}
+                    <li>
+                        <a href="{{ url('monitor404/'~id) }}"{% if id == selectedSource %} class="sel"{% endif %}>{{ item.label }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock %}
