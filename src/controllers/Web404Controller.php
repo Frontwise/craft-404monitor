@@ -26,11 +26,11 @@ class Web404Controller extends Controller
         }
 
         $query = (new Query())
-            ->select(['COUNT(*) as hits', '{{%frontwise_web_404s}}.url', '{{%frontwise_web_404s}}.id', '{{%frontwise_web_404s}}.dateCreated', '{{%elements_sites}}.siteId'])
+            ->select(['COUNT(*) as hits', 'ANY_VALUE({{%frontwise_web_404s}}.url) as url', 'MAX({{%frontwise_web_404s}}.id) as id', 'MAX({{%frontwise_web_404s}}.dateCreated) as dateCreated', 'MAX({{%elements_sites}}.siteId) as siteId'])
             ->from('{{%frontwise_web_404s}}')
             ->leftJoin('{{%elements_sites}} ON {{%frontwise_web_404s}}.id = elementId')
-            ->groupBy(['url'])
-            ->orderBy('hits DESC, {{%frontwise_web_404s}}.dateCreated DESC');
+            ->groupBy(['{{%frontwise_web_404s}}.url'])
+            ->orderBy('hits DESC, dateCreated DESC');
 
         if ($siteId) {
             $query->where('siteId = ' . $siteId);
