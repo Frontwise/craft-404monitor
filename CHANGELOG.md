@@ -1,6 +1,9 @@
 Changelog
 ==================
 
+## 1.0.5 - 2018-10-05
+- Added german translation
+
 ## 1.0.4 - 2018-09-11
 - Removed ANY_VALUE function which does not work in MariaDB
 
