@@ -6,7 +6,7 @@ return [
     'Delete' => 'Slett',
     'All 404 requests' => 'Alle 404 forespørsler',
     'Are you sure you want to delete the selected 404 request?' => 'Er du sikker på at du vil slette di valgte 404 forespørslene?',
-    'Request deleted.' => 'forespørsel slettet.',
+    'Request deleted.' => 'Forespørsel slettet.',
     'Date Created' => 'Dato opprettet',
     'URL' => 'URL',
     'IP Address' => 'IP Adresse',
