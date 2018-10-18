@@ -16,6 +16,7 @@
                 <th>{{ 'URL'|t('monitor404') }}</th>
                 <th class="ordered desc" data-attribute="">{{ 'Hits'|t('monitor404') }}</th>
                 <th class="orderable" scope="col" data-attribute="dateCreated">{{ 'Last hit'|t('monitor404') }}</th>
+                <th data-icon="world"></th>
             </tr>
         </thead>
 
@@ -33,7 +34,10 @@
                         </a>
                     </td>
                     <td>
-                        {{ row.dateCreated|date('Y-m-d H:i') }}
+                        {{ row.dateUpdated|date('Y-m-d H:i') }}
+                    </td>
+                    <td>
+                        <a href="{{ row.url }}" rel="noopener" target="_blank" data-icon="world" title="{{ 'Visit webpage'|t('monitor404') }}"></a>
                     </td>
                 </tr>
             {% endfor %}

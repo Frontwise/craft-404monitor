@@ -7,6 +7,7 @@ use craft\db\Query;
 use frontwise\monitor404\elements\Web404;
 use yii\web\Response;
 use craft\helpers\UrlHelper;
+use frontwise\monitor404\records\Hit;
 
 class Web404Controller extends Controller
 {
@@ -17,20 +18,26 @@ class Web404Controller extends Controller
     public function actionIndex(int $siteId = null): Response
     {
         if (Craft::$app->request->getIsPost() && Craft::$app->request->post('delete')) {
-            if ($this->deleteWeb404s()) {
-                Craft::$app->getSession()->setNotice(Craft::t('monitor404', '404 requests deleted'));
+            if ($this->_deleteWeb404s()) {
+                Craft::$app->getSession()->setNotice(Craft::t('monitor404', 'Requests deleted.'));
 
                 // Redirect to index
                 return $this->redirect(UrlHelper::cpUrl('monitor404'));
             }
         }
 
+        $subQuery = (new Query())
+            ->select(['COUNT(*)'])
+            ->from(Hit::tableName())
+            ->where('web404 = {{%frontwise_web_404s}}.id')
+        ;
+
         $query = (new Query())
-            ->select(['COUNT(*) as hits', 'MAX({{%frontwise_web_404s}}.url) as url', 'MAX({{%frontwise_web_404s}}.id) as id', 'MAX({{%frontwise_web_404s}}.dateCreated) as dateCreated', 'MAX({{%elements_sites}}.siteId) as siteId'])
+            ->select(['hits' => $subQuery, '{{%frontwise_web_404s}}.url as url', '{{%frontwise_web_404s}}.id as id', '{{%elements}}.dateUpdated as dateUpdated', '{{%elements_sites}}.siteId as siteId'])
             ->from('{{%frontwise_web_404s}}')
             ->leftJoin('{{%elements_sites}} ON {{%frontwise_web_404s}}.id = elementId')
-            ->groupBy(['{{%frontwise_web_404s}}.url'])
-            ->orderBy('hits DESC, dateCreated DESC');
+            ->leftJoin('{{%elements}} ON {{%frontwise_web_404s}}.id = {{%elements}}.id')
+            ->orderBy('hits DESC, dateUpdated DESC');
 
         if ($siteId) {
             $query->where('siteId = ' . $siteId);
@@ -50,30 +57,65 @@ class Web404Controller extends Controller
 
     /**
      * @param int $siteId
-     * @param int $id
+     * @param int $id web404Id
      * @return Response
      */
-    public function actionWeb404(int $siteId, int $id): Response
+    public function actionHits(int $siteId, int $id): Response
     {
-        $element = Craft::$app->elements->getElementById($id, 'frontwise\monitor404\elements\Web404', $siteId);
+        $element = Craft::$app->elements->getElementById($id, Web404::class, $siteId);
         $url = null;
+        $hits = [];
         if ($element) {
             $url = $element->url;
+            $hits = Hit::find()->where(['web404' => $element->id])->orderBy(['dateCreated' => SORT_DESC])->all();
         }
-        return $this->renderTemplate('monitor404/web404', [
+
+        return $this->renderTemplate('monitor404/hit', [
             'url' => $url,
             'siteId' => $siteId,
             'showSiteMenu' => false,
+            'hits' => $hits,
+            'id' => $id,
             'crumbs' => [
                 [
                     'url' => UrlHelper::cpUrl('monitor404/'),
-                    'label' => 'All 404s',
+                    'label' => Craft::t('monitor404', 'All 404 requests'),
                 ],
             ]
         ]);
     }
 
-    private function deleteWeb404s()
+    public function actionDeleteHit(): Response
+    {
+        $this->requirePostRequest();
+
+        $request = Craft::$app->getRequest();
+
+        $hitId = $request->getRequiredBodyParam('id');
+        $success = Craft::$app->getDb()->createCommand()
+            ->delete(Hit::tableName(), ['id' => $hitId])
+            ->execute();
+
+        return $this->asJson(['success' => $success]);
+    }
+
+    public function actionDeleteWeb404(): Response
+    {
+        $this->requirePostRequest();
+
+        $request = Craft::$app->getRequest();
+
+        $id = $request->getRequiredBodyParam('id');
+        $success = Craft::$app->elements->deleteElementById($id);
+        if ($success) {
+            Craft::$app->getSession()->setNotice(Craft::t('monitor404', 'Requests deleted.'));
+        }
+
+        // Redirect to index
+        return $this->redirect(UrlHelper::cpUrl('monitor404'));
+    }
+
+    private function _deleteWeb404s(): bool
     {
         foreach (Craft::$app->sites->getAllSites() as $site) {
             $web404s = Web404::find()->site($site)->all();

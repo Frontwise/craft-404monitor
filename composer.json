@@ -2,7 +2,7 @@
     "name": "frontwise/craft-monitor404",
     "description": "Monitor 404 HTTP not found exceptions. See which requests fail often.",
     "type": "craft-plugin",
-    "version": "1.0.6",
+    "version": "1.1.0",
     "keywords": [
         "craft",
         "cms",
@@ -24,7 +24,7 @@
     "extra": {
         "name": "404 monitor",
         "handle": "monitor404",
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "1.1.0",
         "developer": "Frontwise",
         "developerUrl": "https://frontwise.com/",
         "hasCpSection": true,

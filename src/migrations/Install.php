@@ -11,6 +11,7 @@ use craft\mail\Mailer;
 use craft\mail\transportadapters\Php;
 use craft\models\Info;
 use craft\models\Site;
+use frontwise\monitor404\records\Hit;
 
 class Install extends Migration
 {
@@ -23,6 +24,7 @@ class Install extends Migration
 
     public function safeDown()
     {
+        $this->dropTableIfExists(Hit::tableName());
         $this->dropTableIfExists('{{%frontwise_web_404s}}');
         return true;
     }
@@ -40,6 +42,17 @@ class Install extends Migration
         $this->createTable('{{%frontwise_web_404s}}', [
             'id' => $this->primaryKey(),
             'url' => $this->string()->notNull(),
+            'dateCreated' => $this->dateTime()->notNull(),
+            'dateUpdated' => $this->dateTime()->notNull(),
+            'uid' => $this->uid()
+        ]);
+
+        $this->createIndex(null, '{{%frontwise_web_404s}}', ['url'], true);
+        $this->addForeignKey(null, '{{%frontwise_web_404s}}', ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
+
+        $this->createTable(Hit::tableName(), [
+            'id' => $this->primaryKey(),
+            'web404' => $this->integer()->notNull(),
             'remoteIP' => $this->string()->notNull(),
             'userAgent' => $this->string(),
             'message' => $this->string(),
@@ -47,9 +60,10 @@ class Install extends Migration
             'fileLine' => $this->integer()->unsigned(),
             'dateCreated' => $this->dateTime()->notNull(),
             'dateUpdated' => $this->dateTime()->notNull(),
-            'uid' => $this->uid()
+            'uid' => $this->uid(),
         ]);
 
-        $this->addForeignKey(null, '{{%frontwise_web_404s}}', ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
+        $this->createIndex(null, Hit::tableName(), ['remoteIP'], false);
+        $this->addForeignKey(null, Hit::tableName(), ['web404'], '{{%frontwise_web_404s}}', ['id'], 'CASCADE', null);
     }
 }

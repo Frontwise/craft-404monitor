@@ -16,31 +16,6 @@ class Web404 extends Element
     public $url;
 
     /**
-     * @var string
-     */
-    public $remoteIP;
-
-    /**
-     * @var string
-     */
-    public $userAgent;
-
-    /**
-     * @var sting
-     */
-    public $message;
-
-    /**
-     * @var string
-     */
-    public $filePath;
-
-    /**
-     * @var int
-     */
-    public $fileLine;
-
-    /**
      * @inheritdoc
      */
     public static function refHandle()
@@ -147,11 +122,6 @@ class Web404 extends Element
                 ->insert('{{%frontwise_web_404s}}', [
                     'id' => $this->id,
                     'url' => $this->url,
-                    'remoteIP' => $this->remoteIP,
-                    'message' => $this->message,
-                    'userAgent' => $this->userAgent,
-                    'filePath' => $this->filePath,
-                    'fileLine' => $this->fileLine,
                 ])
                 ->execute();
         } else {
@@ -171,7 +141,7 @@ class Web404 extends Element
      */
     protected static function defineSearchableAttributes(): array
     {
-        return ['url', 'remoteIP'];
+        return ['url'];
     }
 
     protected static function defineActions(string $source = null): array
@@ -192,10 +162,6 @@ class Web404 extends Element
         return [
             'elements.dateCreated' => Craft::t('app', 'Date Created'),
             'url' => Craft::t('monitor404', 'URL'),
-            'remoteIP' => Craft::t('monitor404', 'IP Address'),
-            'userAgent' => Craft::t('monitor404', 'User Agent'),
-            'message' => Craft::t('monitor404', 'Message'),
-            'filePath' => Craft::t('monitor404', 'File'),
         ];
     }
 
@@ -204,10 +170,6 @@ class Web404 extends Element
         return [
             'url' => Craft::t('monitor404', 'URL'),
             'dateCreated' => Craft::t('app', 'Date created'),
-            'remoteIP' => Craft::t('monitor404', 'IP Address'),
-            'userAgent' => Craft::t('monitor404', 'User Agent'),
-            'message' => Craft::t('monitor404', 'Message'),
-            'filePath' => Craft::t('monitor404', 'File'),
         ];
     }
 
