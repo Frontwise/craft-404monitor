@@ -18,6 +18,9 @@ return [
     'File' => 'Fil',
     'Hits' => 'Treff',
     'Last hit' => 'Siste treff',
-    'No requests found' => 'Ingen forespørsler funnet',
+    'No 404 requests found' => 'Ingen 404 forespørsler funnet',
     'Visit webpage' => 'Besøk nettsiden',
+    'Remove 404 requests after X days' => 'Fjern 404 forespørsler etter X dager',
+    'Removing 404 requests' => 'Fjerner 404 forespørsler',
+    'Leave blank to keep 404 requests forever' => 'La være tom for å beholde 404 forespørsler for alltid',
 ];

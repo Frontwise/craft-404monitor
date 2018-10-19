@@ -16,7 +16,7 @@
 
 {% block content %}
     <div id="nohits"{% if hits %} class="hidden"{% endif %}>
-        <p>{{ "No requests found"|t('monitor404') }}</p>
+        <p>{{ "No 404 requests found"|t('monitor404') }}</p>
     </div>
 
     {% if hits|length %}

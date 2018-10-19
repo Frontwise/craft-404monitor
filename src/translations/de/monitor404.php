@@ -18,6 +18,9 @@ return [
     'File' => 'Datei',
     'Hits' => 'Aufrufe',
     'Last hit' => 'Letzter Aufruf',
-    'No requests found' => 'Keine Requests gefunden',
+    'No 404 requests found' => 'Keine 404 Requests gefunden',
     'Visit webpage' => 'Besuche die Website',
+    'Remove 404 requests after X days' => 'Entfernen 404 Requests nach X Tagen',
+    'Removing 404 requests' => 'Entfernen von 404 Requests',
+    'Leave blank to keep 404 requests forever' => 'Leer lassen, um 404 Requests für immer zu behalten',
 ];

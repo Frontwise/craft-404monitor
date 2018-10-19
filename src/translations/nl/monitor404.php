@@ -18,6 +18,9 @@ return [
     'File' => 'Bestand',
     'Hits' => 'Opgevraagd',
     'Last hit' => 'Laatste keer opgevraagd',
-    'No requests found' => 'Geen requests gevonden',
+    'No 404 requests found' => 'Geen 404 requests gevonden',
     'Visit webpage' => 'Bezoek website',
+    'Remove 404 requests after X days' => 'Verwijder 404 requests na X dagen',
+    'Removing 404 requests' => '404 requests verwijderen',
+    'Leave blank to keep 404 requests forever' => 'Laat leeg om 404 requests voor altijd te bewaren',
 ];

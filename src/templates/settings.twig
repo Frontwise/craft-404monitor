@@ -1,0 +1,9 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    first: true,
+    label: "Remove 404 requests after X days"|t('monitor404'),
+    instructions: "Leave blank to keep 404 requests forever"|t('monitor404'),
+    name: 'storePeriod',
+    value: settings.storePeriod
+}) }}

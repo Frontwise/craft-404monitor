@@ -1,7 +1,7 @@
 Changelog
 ==================
 
-## 1.1.0 - 2018-10-16
+## 1.1.0 - 2018-10-19
 - Updated scheme, improved performance for sites with a lot of 404s
 
 ## 1.0.6 - 2018-10-08
