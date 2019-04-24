@@ -42,11 +42,19 @@ class Monitor404Plugin extends Plugin
                 $request = Craft::$app->getRequest();
 
                 if (!$web404 = Web404::find()->url($request->getAbsoluteUrl())->one()) {
-                    // Create new web404
-                    $web404 = new Web404();
-                    $web404->url = $request->getAbsoluteUrl();
-                    $web404->siteId = Craft::$app->sites->getCurrentSite()->id;
-                    $success = Craft::$app->elements->saveElement($web404, true, false);
+                    // Check for soft deleted element
+                    if ($web404 = Web404::find()->trashed(true)->url($request->getAbsoluteUrl())->one()) {
+                        Craft::$app->elements->restoreElement($web404);
+                        // Save existing web404 to update the timestamp
+                        $success = Craft::$app->elements->saveElement($web404, true, false);
+                    } else {
+                        // Create new web404
+                        $web404 = new Web404();
+                        $web404->url = $request->getAbsoluteUrl();
+                        $web404->siteId = Craft::$app->sites->getCurrentSite()->id;
+                        $success = Craft::$app->elements->saveElement($web404, true, false);
+                    }
+
                 } else {
                     // Save existing web404 to update the timestamp
                     $success = Craft::$app->elements->saveElement($web404, true, false);

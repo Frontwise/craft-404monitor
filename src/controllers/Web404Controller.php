@@ -109,6 +109,11 @@ class Web404Controller extends Controller
         $id = $request->getRequiredBodyParam('id');
         $success = Craft::$app->elements->deleteElementById($id);
         if ($success) {
+            // Delete 404 hits
+            Craft::$app->getDb()->createCommand()
+                ->delete(Hit::tableName(), ['web404' => $id])
+                ->execute();
+
             Craft::$app->getSession()->setNotice(Craft::t('monitor404', 'Requests deleted.'));
         }
 
@@ -122,6 +127,11 @@ class Web404Controller extends Controller
             $web404s = Web404::find()->site($site)->all();
             foreach ($web404s as $web404) {
                 Craft::$app->elements->deleteElement($web404);
+
+                // Delete 404 hits
+                Craft::$app->getDb()->createCommand()
+                    ->delete(Hit::tableName(), ['web404' => $web404->id])
+                    ->execute();
             }
         }
 

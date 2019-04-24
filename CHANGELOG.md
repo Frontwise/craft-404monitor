@@ -1,5 +1,7 @@
 Changelog
 ==================
+## 1.2.1 - 2019-04-24
+- Check for soft-deleted elements before creating a new web 404. Remove hits when soft deleting web 404s.
 
 ## 1.2.0 - 2019-04-24
 - Added referrer information to 404 hits
