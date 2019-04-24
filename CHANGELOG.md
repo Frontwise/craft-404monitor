@@ -1,6 +1,10 @@
 Changelog
 ==================
 
+## 1.1.1 - 2019-04-24
+- Use Craft 3.1 soft deletion of elements.
+- Improved translations.
+
 ## 1.1.0 - 2018-10-19
 - Updated scheme, improved performance for sites with a lot of 404s
 

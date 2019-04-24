@@ -37,6 +37,7 @@ class Web404Controller extends Controller
             ->from('{{%frontwise_web_404s}}')
             ->leftJoin('{{%elements_sites}} ON {{%frontwise_web_404s}}.id = elementId')
             ->leftJoin('{{%elements}} ON {{%frontwise_web_404s}}.id = {{%elements}}.id')
+            ->where('{{%elements}}.dateDeleted IS NULL')
             ->orderBy('hits DESC, dateUpdated DESC');
 
         if ($siteId) {
