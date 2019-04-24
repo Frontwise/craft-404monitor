@@ -24,6 +24,7 @@
             <thead>
                 <th scope="col">{{ "IP Address"|t('monitor404') }}</th>
                 <th scope="col">{{ "User Agent"|t('monitor404') }}</th>
+                <th scope="col">{{ "Referrer"|t('monitor404') }}</th>
                 <th scope="col">{{ "Message"|t('monitor404') }}</th>
                 <th scope="col">{{ "File"|t('monitor404') }}</th>
                 <th scope="col">{{ "Date Created"|t('monitor404') }}</th>
@@ -37,6 +38,9 @@
                         </td>
                         <td>
                             {{ hit.userAgent }}
+                        </td>
+                        <td>
+                            {{ hit.referrer }}
                         </td>
                         <td>
                             {{ hit.message }}

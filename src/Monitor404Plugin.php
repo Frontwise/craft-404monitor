@@ -19,7 +19,7 @@ use frontwise\monitor404\queue\jobs\Remove404Requests;
 
 class Monitor404Plugin extends Plugin
 {
-    public $schemaVersion = '1.1.0';
+    public $schemaVersion = '1.2.0';
 
     public $hasCpSettings = true;
 
@@ -61,6 +61,7 @@ class Monitor404Plugin extends Plugin
                 $hit->web404 = $web404->id;
                 $hit->remoteIP = $request->getRemoteIP();
                 $hit->userAgent = $request->getUserAgent();
+                $hit->referrer = $request->getReferrer();
                 $hit->message = $exception->getMessage();
                 $hit->filePath = $exception->getFile();
                 $hit->fileLine = $exception->getLine();

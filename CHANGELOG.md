@@ -1,6 +1,9 @@
 Changelog
 ==================
 
+## 1.2.0 - 2019-04-24
+- Added referrer information to 404 hits
+
 ## 1.1.1 - 2019-04-24
 - Use Craft 3.1 soft deletion of elements.
 - Improved translations.

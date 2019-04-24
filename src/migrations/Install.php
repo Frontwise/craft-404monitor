@@ -55,6 +55,7 @@ class Install extends Migration
             'web404' => $this->integer()->notNull(),
             'remoteIP' => $this->string()->notNull(),
             'userAgent' => $this->string(),
+            'referrer' => $this->string(),
             'message' => $this->string(),
             'filePath' => $this->string(),
             'fileLine' => $this->integer()->unsigned(),

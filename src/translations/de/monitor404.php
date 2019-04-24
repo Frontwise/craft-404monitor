@@ -23,4 +23,5 @@ return [
     'Remove 404 requests after X days' => 'Entfernen 404 Requests nach X Tagen',
     'Removing 404 requests' => 'Entfernen von 404 Requests',
     'Leave blank to keep 404 requests forever' => 'Leer lassen, um 404 Requests für immer zu behalten',
+    'Referrer' => 'Verweis',
 ];
