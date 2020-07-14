@@ -1,5 +1,11 @@
 Changelog
 ==================
+## 1.3.0 - 2020-07-14
+- Changed removal of requests: remove when there are no hits in the past X days
+- Improved: performance when deleting lots of requests
+- Improved: performance for multisites
+- Fixed: requests showing up for each site
+
 ## 1.2.1 - 2019-04-24
 - Check for soft-deleted elements before creating a new web 404. Remove hits when soft deleting web 404s.
 
