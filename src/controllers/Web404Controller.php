@@ -107,7 +107,7 @@ class Web404Controller extends Controller
         $request = Craft::$app->getRequest();
 
         $id = $request->getRequiredBodyParam('id');
-        $success = Craft::$app->elements->deleteElementById($id);
+        $success = Craft::$app->elements->deleteElementById($id, Web404::class);
         if ($success) {
             // Delete 404 hits
             Craft::$app->getDb()->createCommand()

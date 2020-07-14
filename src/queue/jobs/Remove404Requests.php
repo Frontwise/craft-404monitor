@@ -22,14 +22,23 @@ class Remove404Requests extends BaseJob
         $date = new \DateTime();
         $date->sub(new \DateInterval('P' . $settings->storePeriod . 'D'));
 
-        // Remove all web404 elements created before storagePeriod
+        // Remove all web404 elements with their last hits created before storagePeriod
+        // Subquery last hit
+        $subQuery = (new Query())
+            ->select(['dateCreated'])
+            ->from(Hit::tableName())
+            ->where('web404 = web404.id')
+            ->orderBy('dateCreated', 'DESC')
+            ->limit(1)
+        ;
+
         $web404s = (new Query)
-            ->select(['id'])
-            ->from('{{%frontwise_web_404s}}')
-            ->where(['<', 'dateCreated', Db::prepareDateForDb($date)])
+            ->select('web404.id')
+            ->from(['web404' => '{{%frontwise_web_404s}}'])
+            ->where(['<', $subQuery, Db::prepareDateForDb($date)])
             ->all();
         foreach($web404s as $web404) {
-            Craft::$app->elements->deleteElementById($web404['id']);
+            Craft::$app->elements->deleteElementById($web404['id'], Web404::class);
         }
 
         // Remove all hits created before storagePeriod
