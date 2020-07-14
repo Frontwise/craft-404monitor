@@ -41,7 +41,7 @@ class Web404Controller extends Controller
             ->orderBy('hits DESC, dateUpdated DESC');
 
         if ($siteId) {
-            $query->where('siteId = ' . $siteId);
+            $query->andWhere('siteId = ' . $siteId);
         }
 
         $web404s = $query->all();
