@@ -131,6 +131,27 @@ class Web404 extends Element
         parent::afterSave($isNew);
     }
 
+    public function afterPropagate(bool $isNew)
+    {
+        if ($isNew) {
+            if (Craft::$app->getIsMultiSite()) {
+                // New elements are propagated to all sites by default, remove propagations
+                Craft::$app->db->createCommand()
+                    ->delete('{{%elements_sites}}', [
+                        'AND',
+                        '{{%elements_sites}}.elementId = :elementId',
+                        '{{%elements_sites}}.siteId != :siteId'
+                    ],[
+                        ':elementId' => $this->id,
+                        ':siteId' => $this->siteId
+                    ])
+                    ->execute();
+            }
+        }
+
+        parent::afterPropagate($isNew);
+    }
+
     public static function find(): ElementQueryInterface
     {
         return new Web404Query(static::class);
