@@ -1,0 +1,39 @@
+<div class="chart-container">
+    <canvas id="chart-404" class="chart"></canvas>
+</div>
+
+{% js %}
+    var ctx = document.getElementById('chart-404').getContext('2d');
+
+    const hits = {{ hits|json_encode|raw }};
+    const xAxisData = {{ dateRangeChart|json_encode|raw }};
+
+    const myChart = new Chart(ctx, {
+        type: '{{ chartType }}',
+        data: {
+            labels: xAxisData,
+            datasets: [
+                {
+                    data: hits,
+                    backgroundColor: 'rgba(11, 105, 163, .1)',
+                    borderColor: 'rgba(11, 105, 163, 1)',
+                    borderWidth: 1,
+                    pointRadius: 0,
+                    lineTension: 0
+                }
+            ]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        precision: 0
+                    }
+                }]
+            }
+        }
+    });
+{% endjs %}

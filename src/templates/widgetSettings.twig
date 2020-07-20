@@ -1,0 +1,26 @@
+{% import "_includes/forms" as form %}
+
+{{ form.textField({
+    label: 'Period'|t('monitor404'),
+    instructions: 'Number of days to display in the chart'|t('monitor404'),
+    id: 'period',
+    name: 'period',
+    value: widget.period,
+    size: 2,
+    errors: widget.getErrors('period')
+}) }}
+
+{{ form.selectField({
+    label: 'Chart type'|t('monitor404'),
+    id: 'chartType',
+    name: 'chartType',
+    value: widget.chartType,
+    options: [{
+        label: 'Line chart'|t('monitor404'),
+        value: 'line'
+    }, {
+        label: 'Column chart'|t('monitor404'),
+        value: 'bar'
+    }],
+    errors: widget.getErrors('chartType')
+}) }}

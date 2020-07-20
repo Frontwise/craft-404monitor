@@ -24,4 +24,10 @@ return [
     'Removing 404 requests' => 'Entfernen von 404 Requests',
     'Leave blank to keep 404 requests forever' => 'Leer lassen, um 404 Requests für immer zu behalten',
     'Referrer' => 'Verweis',
+    '404 monitor' => '404 monitor',
+    'Period' => 'Zeitraum',
+    'Number of days to display in the chart' => 'Anzahl der Tage, die im Diagramm angezeigt werden sollen',
+    'Chart type' => 'Diagramm Typ',
+    'Line chart' => 'Liniendiagramm',
+    'Column chart' => 'Stabdiagramm',
 ];

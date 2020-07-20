@@ -5,7 +5,9 @@ use Craft;
 
 use craft\base\Plugin;
 use craft\events\ExceptionEvent;
+use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterUrlRulesEvent;
+use craft\services\Dashboard;
 use craft\web\ErrorHandler;
 use craft\web\UrlManager;
 use craft\web\View;
@@ -16,6 +18,7 @@ use frontwise\monitor404\records\Hit;
 use frontwise\monitor404\controllers\Web404Controller;
 use frontwise\monitor404\models\Settings;
 use frontwise\monitor404\queue\jobs\Remove404Requests;
+use frontwise\monitor404\widgets\Web404Widget;
 
 class Monitor404Plugin extends Plugin
 {
@@ -80,6 +83,9 @@ class Monitor404Plugin extends Plugin
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, [$this, 'registerCpUrlRules']);
         Event::on(\craft\web\User::class, \craft\web\User::EVENT_AFTER_LOGIN, [$this, 'removeOldRequests']);
+        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, function(RegisterComponentTypesEvent $event) {
+            $event->types[] = Web404Widget::class;
+        });
 
         Craft::info('frontwise/monitor404 plugin loaded', __METHOD__);
     }
