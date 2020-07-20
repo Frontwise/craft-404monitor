@@ -1,5 +1,9 @@
 Changelog
 ==================
+## 1.4.0 - 2020-07-20
+### Added
+- Dashboard widget to monitor 404 web requests
+
 ## 1.3.0 - 2020-07-14
 - Changed removal of requests: remove when there are no hits in the past X days
 - Improved: performance when deleting lots of requests
